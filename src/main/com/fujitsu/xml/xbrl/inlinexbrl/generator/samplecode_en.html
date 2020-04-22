@@ -1,0 +1,1338 @@
+<html>
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=utf-8">
+<style>
+</style>
+
+</head>
+<body  >
+
+<div>
+<h1>Sample program using Inline XBRL 1.0 generation API</h1>
+This sample program processes the following simple instance document and XHTML document and outputs an inline XBRL 1.0 document.
+</p>
+<h2>Input instance document</h2>
+</p>
+<p>
+The input instance document contains the following facts and footnote:
+</p>
+<table border=1 >
+ <caption style="text-align: center;">Table 1. Facts and Footnote in the instance document</caption>
+ <tr>
+  <th width="40">No.</th>
+  <th width=149 valign=top >Item/Footnote</th>
+  <th width=142 valign=top >Value</th>
+  <th width=142 valign=top >Context</th>
+  <th width=59 valign=top >Unit</th>
+  <th width=90 valign=top >Decimals</th>
+ </tr>
+ <tr>
+  <td width="40">1</td>
+  <td width=149 valign=top >Document Period End Date</td>
+  <td width=142 valign=top >2010-05-31</td>
+  <td width=142 valign=top >CurrentDuration</td>
+  <td width=59 valign=top >&nbsp;</td>
+  <td width=90 valign=top >&nbsp;</td>
+ </tr>
+ <tr>
+  <td width="40">2</td>
+  <td width=149 valign=top >
+  <p ><span >Sales</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >345678000000</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >CurrentDuration</span></p>
+  </td>
+  <td width=59 valign=top >
+  <p ><span >USD</span></p>
+  </td>
+  <td width=90 valign=top >
+  <p ><span >-6</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="40">3</td>
+  <td width=149 valign=top >
+  <p ><span >Net income (loss)</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >-12345000000</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >CurrentDuration</span></p>
+  </td>
+  <td width=59 valign=top >
+  <p ><span >USD</span></p>
+  </td>
+  <td width=90 valign=top >
+  <p ><span >-6</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="40">4</td>
+  <td width=149 valign=top >
+  <p ><span >Income tax (text block)</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >This is a &amp;lt;b&amp;gt;note&amp;lt;/b&amp;gt;for income taxes.</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >CurrentDuration</span></p>
+  </td>
+  <td width=59 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=90 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="40">5</td>
+  <td width=149 valign=top >
+  <p ><span >Footnote</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >This is a footnote for sales.</span></p>
+  </td>
+  <td width=142 valign=top >&nbsp;</td>
+  <td width=59 valign=top >&nbsp;</td>
+  <td width=90 valign=top >&nbsp;</td>
+ </tr>
+</table>
+
+<p>
+The source code of the instance document is as follows:
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width: 1400px; margin-bottom: 30pt;">
+<pre>
+&lt;xbrli:xbrl xmlns:sample="http://www.fujitsu.com/xbrl/sample"
+   xmlns:link="http://www.xbrl.org/2003/linkbase"
+   xmlns:xbrli="http://www.xbrl.org/2003/instance"
+   xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+   xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+  &lt;link:schemaRef xlink:type="simple" xlink:href="sample.xsd"/&gt;
+  &lt;xbrli:context id="CurrentDuration"&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme="sample"&gt;sample&lt;/xbrli:identifier&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2009-06-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2010-05-31&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;
+  &lt;xbrli:unit id="USD"&gt;
+    &lt;xbrli:measure&gt;iso4217:USD&lt;/xbrli:measure&gt;
+  &lt;/xbrli:unit&gt;
+  &lt;sample:DocumentPeriodEndDate contextRef="CurrentDuration" id="fact1"&gt;2010-05-31&lt;/sample:DocumentPeriodEndDate&gt;
+  &lt;sample:Sales decimals="-6" contextRef="CurrentDuration" unitRef="USD" id="fact2"&gt;345678000000&lt;/sample:Sales&gt;
+  &lt;sample:NetIncomeLoss decimals="-6" contextRef="CurrentDuration" 
+    unitRef="USD" id="fact3"&gt;-12345000000&lt;/sample:NetIncomeLoss&gt;
+  &lt;sample:IncomeTaxDisclosureTextBlock contextRef="CurrentDuration" id="fact4"&gt;This is a &amp;lt;b&amp;gt;note&amp;lt;/b&amp;gt; for income taxes.&lt;/sample:IncomeTaxDisclosureTextBlock&gt;
+  &lt;link:footnoteLink xlink:type="extended" xlink:role="http://www.xbrl.org/2003/role/link"&gt;
+    &lt;link:loc xlink:type="locator" xlink:href="#fact2" xlink:label="fact2"/&gt;
+    &lt;link:footnote xlink:type="resource" xlink:label="footnote5" 
+      xlink:role="http://www.xbrl.org/2003/role/footnote" xml:lang="en" id="footnote5"&gt;This is a footnote for sales.&lt;/link:footnote&gt;
+    &lt;link:footnoteArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/fact-footnote" 
+      xlink:from="fact2" xlink:to="footnote5" order="1.0"/&gt;
+  &lt;/link:footnoteLink&gt;
+&lt;/xbrli:xbrl&gt;
+</pre>
+</div>
+<h2>Input XHTML document</h2>
+<p>
+The input XHTML document contains the values reported in the above instance document as shown below:
+</p>
+<div style="margin: 20pt; width: 300px;">
+    <div><b>Report Sample (Dollars in millions)</b></div>
+    <div>
+      <table border="1">
+        <tr>
+          <th/>
+          <th>2010</th>
+        </tr>
+        <tr>
+          <td>Document Period End Date</td>
+          <td>May 31, 2010</td>
+        </tr>
+        <tr>
+          <td>Sales [1]</td>
+          <td>345,678</td>
+        </tr>
+        <tr>
+          <td>Net income (loss)</td>
+          <td>(12,345)</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <b>Income tax (text block):</b>
+    </div>
+    <div>This is a <b>note</b> for income taxes.</div>
+    <br/>
+    <div>[1]</div>
+    <div>This is a footnote for sales.</div>
+</div>
+
+<p>
+The source code of the XHTML document is as follows:
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width: 650px; margin-bottom: 30pt;">
+<pre>
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Report Sample (Inline XBRL 1.0)&lt;/title&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div&gt;&lt;b&gt;Report Sample (Dollars in millions)&lt;/b&gt;&lt;/div&gt;
+    &lt;div&gt;
+      &lt;table border="1"&gt;
+        &lt;tr&gt;
+          &lt;th/&gt;
+          &lt;th&gt;2010&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Document Period End Date&lt;/td&gt;
+          &lt;td id="date"&gt;May 31, 2010&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Sales [1]&lt;/td&gt;
+          &lt;td id="sales"&gt;345,678&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Net income (loss)&lt;/td&gt;
+          &lt;td id="income"&gt;(12,345)&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+      &lt;div&gt;
+        &lt;b&gt;Income tax (text block):&lt;/b&gt;
+      &lt;/div&gt;
+      &lt;div id="textblock"&gt;This is a &lt;b&gt;note&lt;/b&gt; for income taxes.&lt;/div&gt;
+      &lt;p/&gt;
+      &lt;div&gt;[1]&lt;/div&gt;
+      &lt;div id="footnote"&gt;This is a footnote for sales.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+<p>
+The following table shows the DOM node structure of the XHTML document.
+</p>
+
+<table border=1>
+ <caption style="text-align: center;">Table 2. DOM node structure of the XHTML document</caption>
+ <tr>
+  <th>No.</th>
+  <th width=239 colspan=7 valign=top >DOM Node</th>
+  <th width=318 valign=top >Text Value</th>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width=239 colspan=7 valign=top >
+  <p ><span >html</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >2</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=222 colspan=6 valign=top >
+  <p ><span >body</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >3</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >4</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >b</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >5</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Report Sample (Dollars in millions)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >6</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >7</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >table</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >8</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >9</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >th</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >10</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >th</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >11</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >2010</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >12</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >13</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >14</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Document Period End Date</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >15</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >16</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >May 31, 2010</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >17</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >18</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >19</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Sales [1]</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >20</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >21</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >345,678</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >22</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >23</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >24</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Net income (loss)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >25</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >26</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >(12,345)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >27</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >28</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >b</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >29</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Income tax (text block):</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >30</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >31</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >This is a</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >32</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >b</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >33</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >note</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >34</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >for income taxes.</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >35</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >p</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >36</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >37</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >[1]</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >38</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >39</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >This is a footnote for sales.</span></p>
+  </td>
+ </tr>
+</table>
+
+<h2>Mappings</h2>
+<p>
+This sample program prepares the following mappings between the facts/footnote and XHTML DOM nodes:
+</p>
+<table border="1" width=800pt>
+<caption>Table 3. Mappings</caption>
+<tr>
+<th width="60">Fact/Footnote No.<br>(table 1)</th>
+<th width="60">Start Node No.<br>(table 2)</th>
+<th width="60">End Node No.<br>(table 2)</th>
+<th>Format</th>
+<th>Scale</th>
+<th>Escape</th>
+<th width=300px">Remarks</th>
+</tr>
+<tr>
+<td>fact1</td>
+<td>16</td>
+<td>-</td>
+<td>ixt:datelongus</td>
+<td>-</td>
+<td>false</td>
+<td>"ixt:datelongus" is specified as format because the date is reported in the format "Month Day, Year".</td>
+</tr>
+<tr>
+<td>fact2</td>
+<td>21</td>
+<td>-</td>
+<td>ixt:numcommadot</td>
+<td>6</td>
+<td>-</td>
+<td>"ixt:numcommadot" is specified as format because the value is reported with the grouping separator ",". Also, "6" is specified as scale because the value is reported in millions.</td>
+</tr>
+<tr>
+<td>fact3</td>
+<td>26</td>
+<td>-</td>
+<td>ixt:numcommadot</td>
+<td>6</td>
+<td>-</td>
+<td>Same as above.</td>
+</tr>
+<tr>
+<td>fact4</td>
+<td>31</td>
+<td>34</td>
+<td>-</td>
+<td>-</td>
+<td>true</td>
+<td>"true" is specified as escape because the value of the fact contains a XHTML tag.</td>
+</tr>
+<tr>
+<td>footnote5</td>
+<td>39</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>This is sample of Footnote.</td>
+</tr>
+</table>
+
+<h2>Source code of the sample program</h2>
+<p>
+The following is the source code of the sample program.
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width: 700px; margin-bottom: 30pt; padding: 10pt;">
+<pre>
+<span style="color: #007000">// Instance object of the input instance document</span>
+Instance instance = ...;
+
+<span style="color: #007000">// Document object of the input XHTML document</span>
+Document xhtmlDoc = ...;
+
+<span style="color: #007000"> // create a mapping for fact #1</span>
+NonNumericItem fact1 = ...; <span style="color: #007000">// fact #1</span>
+Node dateNode = ...;        <span style="color: #007000">// XHTML node #16</span>
+NonNumericMapping mapping1 = new NonNumericMapping(
+	fact1,
+	dateNode,
+	FormatType.DATE_LONG_US,
+	false);
+
+<span style="color: #007000">// create a mapping for fact #2</span>
+NumericItem fact2 = ...; <span style="color: #007000">// fact #2</span>
+Node salesNode = ...;    <span style="color: #007000">// XHTML node #21</span>
+NonFractionMapping mapping2 = new NonFractionMapping(
+	fact2,
+	salesNode,
+	FormatType.NUM_COMMA_DOT,
+	6);
+
+<span style="color: #007000">// create a mapping for fact #3</span>
+NumericItem fact3 = ...;  <span style="color: #007000">// fact #3</span>
+Node incomeNode = ...;    <span style="color: #007000">// XHTML node #26</span>
+NonFractionMapping mapping3 = new NonFractionMapping(
+	fact3,
+	incomeNode,
+	FormatType.NUM_COMMA_DOT,
+	6);
+
+<span style="color: #007000">// create a mapping for fact #4</span>
+NonNumericItem ... = ... <span style="color: #007000">// fact #4</span>
+Node startNode = ...;    <span style="color: #007000">// XHTML Startnode #31</span>
+Node endNode = ...;      <span style="color: #007000">// XHTML Endnode #34</span>
+NonNumericMapping mapping4 = new NonNumericMapping(
+	fact4,
+	startNode,
+	endNode,
+	null,
+	true);
+
+<span style="color: #007000">// create a mapping for footnote #5</span>
+Footnote ... = ... <span style="color: #007000">// footnote #5</span>
+Node footnoteNode = ...;    <span style="color: #007000">// XHTML node #39</span>
+FootnoteMapping mapping5 = new FootnoteMapping(
+	footnote5,
+	footnoteNode);
+	
+<span style="color: #007000">// create an array of mappings</span>
+InlineXBRLMapping[] mappings = new InlineXBRLMapping[]{
+	mapping1, mapping2, mapping3, mapping4, mapping5
+};
+
+<span style="color: #007000">// create inline XBRL 1.0 generator</span>
+InlineXBRLGenerator generator = new InlineXBRLGenerator();
+
+<span style="color: #007000">// set error handler</span>
+generator.setErrorHandler(new MyErrorHandler());
+
+<span style="color: #007000">// generate inline XBRL 1.0</span>
+Document inlineDoc = generator.generateInlineXBRL(instance, xhtmlDoc, mappings);
+
+</pre>
+</div>
+
+<h2>Result inline XBRL 1.0 document</h2>
+<p>
+The following is the source code of the result inline XBRL 1.0 document.
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width:1000px; margin-bottom: 30pt;">
+<pre>
+&lt;html version="-//XBRL International//DTD XHTML Inline XBRL 1.0//EN"
+   xmlns="http://www.w3.org/1999/xhtml" xmlns:ix="http://www.xbrl.org/2008/inlineXBRL" 
+   xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2010-04-20" 
+   xmlns:link="http://www.xbrl.org/2003/linkbase" 
+   xmlns:sample="http://www.fujitsu.com/xbrl/sample" 
+   xmlns:xbrli="http://www.xbrl.org/2003/instance" 
+   xmlns:iso4217="http://www.xbrl.org/2003/iso4217" 
+   xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+  &lt;head&gt;
+    &lt;title&gt;Report Sample (Inline XBRL 1.0)&lt;/title&gt;
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8"/&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;div style="display: none"&gt;
+      &lt;ix:header&gt;
+        &lt;ix:references&gt;
+          &lt;link:schemaRef xlink:type="simple" xlink:href="sample.xsd"/&gt;
+        &lt;/ix:references&gt;
+        &lt;ix:resources&gt;
+          &lt;xbrli:context id="CurrentDuration"&gt;
+            &lt;xbrli:entity&gt;
+              &lt;xbrli:identifier scheme="sample"&gt;sample&lt;/xbrli:identifier&gt;
+            &lt;/xbrli:entity&gt;
+            &lt;xbrli:period&gt;
+              &lt;xbrli:startDate&gt;2009-06-01&lt;/xbrli:startDate&gt;
+              &lt;xbrli:endDate&gt;2010-05-31&lt;/xbrli:endDate&gt;
+            &lt;/xbrli:period&gt;
+          &lt;/xbrli:context&gt;
+          &lt;xbrli:unit id="USD"&gt;
+            &lt;xbrli:measure&gt;iso4217:USD&lt;/xbrli:measure&gt;
+          &lt;/xbrli:unit&gt;
+        &lt;/ix:resources&gt;
+      &lt;/ix:header&gt;
+    &lt;/div&gt;
+    &lt;div&gt;&lt;b&gt;Report Sample (Dollars in millions)&lt;/b&gt;&lt;/div&gt;
+    &lt;div&gt;
+      &lt;table border="1"&gt;
+        &lt;tr&gt;
+          &lt;th/&gt;
+          &lt;th&gt;2010&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Document Period End Date&lt;/td&gt;
+          &lt;td id="date"&gt;
+            &lt;ix:nonNumeric name="sample:DocumentPeriodEndDate" contextRef="CurrentDuration"
+              format="ixt:datelongus" id="fact1"&gt;May 31, 2010&lt;/ix:nonNumeric&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Sales [1]&lt;/td&gt;
+          &lt;td id="sales"&gt;
+            &lt;ix:nonFraction name="sample:Sales" contextRef="CurrentDuration" unitRef="USD" footnoteRefs="footnote5" 
+              decimals="-6" format="ixt:numcommadot" scale="6" id="fact2"&gt;345,678&lt;/ix:nonFraction&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Net income (loss)&lt;/td&gt;
+          &lt;td id="income"&gt;(&lt;ix:nonFraction name="sample:NetIncomeLoss" contextRef="CurrentDuration" unitRef="USD" 
+            decimals="-6" sign="-" format="ixt:numcommadot" scale="6" id="fact3"&gt;12,345&lt;/ix:nonFraction&gt;)&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+      &lt;div&gt;
+        &lt;b&gt;Income tax (text block):&lt;/b&gt;
+      &lt;/div&gt;
+      &lt;div id="textblock"&gt;
+        &lt;ix:nonNumeric name="sample:IncomeTaxDisclosureTextBlock" contextRef="CurrentDuration" 
+          escape="true" id="fact4"&gt;This is a &lt;b&gt;note&lt;/b&gt; for income taxes.&lt;/ix:nonNumeric&gt;
+      &lt;/div&gt;
+      &lt;p/&gt;
+      &lt;div&gt;[1]&lt;/div&gt;
+      &lt;div id="footnote"&gt;
+        &lt;ix:footnote footnoteID="footnote5" arcrole="http://www.xbrl.org/2003/arcrole/fact-footnote" 
+footnoteLinkRole="http://www.xbrl.org/2003/role/link" footnoteRole="http://www.xbrl.org/2003/role/footnote" 
+xml:lang="en" id="footnote5"&gt;This is a footnote for sales.&lt;/ix:footnote&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+</div>
+
+</body>
+
+</html>

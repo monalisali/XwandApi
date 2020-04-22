@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>XwandApi</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <dependencies>
+        <dependency>
+            <groupId>lgenerator</groupId>  <!-- 库名称，也可以自定义 -->
+            <artifactId>lgenerator</artifactId>    <!--库名称，也可以自定义-->
+<!--         <version>1.0</version> &lt;!&ndash;版本号&ndash;&gt;-->
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\ixbrlgenerator.jar</systemPath> <!--项目根目录下的lib文件夹下-->
+        </dependency>
+
+        <dependency>
+            <groupId>xwand</groupId>
+            <artifactId>xwand</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\xwand.jar</systemPath> <!--项目根目录下的lib文件夹下-->
+        </dependency>
+    </dependencies>
+
+</project>

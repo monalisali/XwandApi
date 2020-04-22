@@ -1,0 +1,1196 @@
+<html>
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=Shift_JIS">
+<style>
+</style>
+
+</head>
+<body  >
+
+<div>
+<h1>Inline XBRL生成 API のサンプルプログラム</h1>
+このサンプルプログラムは、シンプルなインスタンス文書とXHTHML文書を処理し、Inline XBRL文書を出力します。
+</p>
+<h2>入力インスタンス文書</h2>
+</p>
+<p>
+入力インスタンス文書は以下のファクトを含んでいます。
+</p>
+<table border=1 >
+ <caption style="text-align: center;">テーブル1. インスタンス文書に含まれるファクト</caption>
+ <tr>
+  <th width="40">No.</th>
+  <th width=149 valign=top >項目</th>
+  <th width=142 valign=top >値</th>
+  <th width=142 valign=top >コンテキスト</th>
+  <th width=59 valign=top >単位</th>
+  <th width=90 valign=top >decimals</th>
+ </tr>
+ <tr>
+  <td width="40">1</td>
+  <td width=149 valign=top >Document Period End Date</td>
+  <td width=142 valign=top >2010-05-31</td>
+  <td width=142 valign=top >CurrentDuration</td>
+  <td width=59 valign=top >&nbsp;</td>
+  <td width=90 valign=top >&nbsp;</td>
+ </tr>
+ <tr>
+  <td width="40">2</td>
+  <td width=149 valign=top >
+  <p ><span >Sales</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >345,678,000,000</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >CurrentDuration</span></p>
+  </td>
+  <td width=59 valign=top >
+  <p ><span >USD</span></p>
+  </td>
+  <td width=90 valign=top >
+  <p ><span >-6</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="40">3</td>
+  <td width=149 valign=top >
+  <p ><span >Net income (loss)</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >-12,345,000,000</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >CurrentDuration</span></p>
+  </td>
+  <td width=59 valign=top >
+  <p ><span >USD</span></p>
+  </td>
+  <td width=90 valign=top >
+  <p ><span >-6</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width="40">4</td>
+  <td width=149 valign=top >
+  <p ><span >Income tax (text block)</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >This is a &lt;b&gt;note&lt;/b&gt;for income taxes.</span></p>
+  </td>
+  <td width=142 valign=top >
+  <p ><span >CurrentDuration</span></p>
+  </td>
+  <td width=59 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=90 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+</table>
+
+<p>
+インスタンス文書のソースコードは以下の通りです。
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width: 800px; margin-bottom: 30pt;">
+<pre>
+&lt;xbrli:xbrl xmlns:sample="http://www.fujitsu.com/xbrl/sample"
+   xmlns:link="http://www.xbrl.org/2003/linkbase"
+   xmlns:xbrli="http://www.xbrl.org/2003/instance"
+   xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+   xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+  &lt;link:schemaRef xlink:type="simple" xlink:href="sample.xsd"/&gt;
+  &lt;xbrli:context id="CurrentDuration"&gt;
+    &lt;xbrli:entity&gt;
+      &lt;xbrli:identifier scheme="sample"&gt;sample&lt;/xbrli:identifier&gt;
+    &lt;/xbrli:entity&gt;
+    &lt;xbrli:period&gt;
+      &lt;xbrli:startDate&gt;2009-06-01&lt;/xbrli:startDate&gt;
+      &lt;xbrli:endDate&gt;2010-05-31&lt;/xbrli:endDate&gt;
+    &lt;/xbrli:period&gt;
+  &lt;/xbrli:context&gt;
+  &lt;xbrli:unit id="USD"&gt;
+    &lt;xbrli:measure&gt;iso4217:USD&lt;/xbrli:measure&gt;
+  &lt;/xbrli:unit&gt;
+  &lt;sample:DocumentPeriodEndDate contextRef="CurrentDuration"&gt;2010-05-31&lt;/sample:DocumentPeriodEndDate&gt;
+  &lt;sample:Sales decimals="-6" contextRef="CurrentDuration" unitRef="USD"&gt;345000000&lt;/sample:Sales&gt;
+  &lt;sample:NetIncomeLoss decimals="-6" contextRef="CurrentDuration" 
+    unitRef="USD"&gt;-12000000&lt;/sample:NetIncomeLoss&gt;
+  &lt;sample:IncomeTaxDisclosureTextBlock contextRef="CurrentDuration"&gt;
+    This is a &lt;b&gt;note&lt;/b&gt; for income taxes.
+  &lt;/sample:IncomeTaxDisclosureTextBlock&gt;
+&lt;/xbrli:xbrl&gt;
+</pre>
+</div>
+<h2>入力XHTML文書</h2>
+<p>
+入力XHTML文書は、上記のインスタンス文書の値を含んだ以下の形式となっています。
+</p>
+<div style="margin: 20pt;">
+    <div><b>Report Sample (Dollars in millions)</b></div>
+    <div>
+      <table border="1px">
+        <tr>
+          <th/>
+          <th>2010</th>
+        </tr>
+        <tr>
+          <td>Document Period End Date</td>
+          <td>May 31, 2010</td>
+        </tr>
+        <tr>
+          <td>Sales</td>
+          <td>345,678</td>
+        </tr>
+        <tr>
+          <td>Net income (loss)</td>
+          <td>(12,345)</td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <b>Income tax (text block):</b>
+    </div>
+    <div>This is a <b>note</b> for income taxes.</div>
+</div>
+
+<p>
+このXHTML文書のソースコードは以下の通りです。
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width: 800px; margin-bottom: 30pt;">
+<pre>
+&lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
+  &lt;body&gt;
+    &lt;div&gt;&lt;b&gt;Report Sample (Dollars in millions)&lt;/b&gt;&lt;/div&gt;
+    &lt;div&gt;
+      &lt;table border="1px"&gt;
+        &lt;tr&gt;
+          &lt;th/&gt;
+          &lt;th&gt;2010&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Document Period End Date&lt;/td&gt;
+          &lt;td&gt;May 31, 2010&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Sales&lt;/td&gt;
+          &lt;td&gt;345,678&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Net income (loss)&lt;/td&gt;
+          &lt;td&gt;(12,345)&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;b&gt;Income tax (text block):&lt;/b&gt;
+    &lt;/div&gt;
+    &lt;div&gt;This is a &lt;b&gt;note&lt;/b&gt; for income taxes.&lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+<p>
+以下のテーブルは、XHTML文書のDOMノード構造を表しています。
+</p>
+
+<table border=1>
+ <caption style="text-align: center;">テーブル 2. XHTML文書のDOMノード構造</caption>
+ <tr>
+  <th>No.</th>
+  <th width=239 colspan=7 valign=top >DOMノード</th>
+  <th width=318 valign=top >テキスト値</th>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >1</span></p>
+  </td>
+  <td width=239 colspan=7 valign=top >
+  <p ><span >html</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >2</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=222 colspan=6 valign=top >
+  <p ><span >body</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >3</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >4</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >b</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >5</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Report Sample (Dollars in millions)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >6</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >7</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >table</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >8</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >9</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >th</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >10</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >th</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >11</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >2010</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >12</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >13</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >14</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Document Period End Date</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >15</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >16</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >May 31, 2010</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >17</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >18</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >29</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Sales</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >30</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >31</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >345,678</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >32</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >tr</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >33</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >34</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Net income (loss)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >35</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=148 colspan=2 valign=top >
+  <p ><span >td</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >36</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=132 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >(12,345)</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >37</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >38</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >b</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >39</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >Income tax (text block):</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >40</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=204 colspan=5 valign=top >
+  <p ><span >div</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >41</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >This is a</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >42</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >b</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >43</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=166 colspan=3 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >note</span></p>
+  </td>
+ </tr>
+ <tr>
+  <td width=37 valign=top >
+  <p ><span >44</span></p>
+  </td>
+  <td width=16 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=19 valign=top >
+  <p ><span >&nbsp;</span></p>
+  </td>
+  <td width=185 colspan=4 valign=top >
+  <p ><span >#text</span></p>
+  </td>
+  <td width=318 valign=top >
+  <p ><span >for income taxes.</span></p>
+  </td>
+ </tr>
+</table>
+
+<h2>マッピング</h2>
+<p>
+このサンプルプログラムでは、以下のファクトとXHTML DOMノードとのマッピングを準備しています。
+</p>
+<table border="1">
+<caption>テーブル 3. マッピング</caption>
+<tr>
+<th width="60">ファクトNo.<br>(テーブル 1)</th>
+<th width="60">開始ノードNo.<br>(テーブル 2)</th>
+<th width="60">終了ノードNo.<br>(テーブル 2)</th>
+<th>format</th>
+<th>scale</th>
+<th>escape</th>
+<th width=300px">備考</th>
+</tr>
+<tr>
+<td>1</td>
+<td>16</td>
+<td>-</td>
+<td>ixt:datelongus</td>
+<td>-</td>
+<td>false</td>
+<td>日付が「月 日, 年」で表現されているため、formatに"ixt:datelongus"を指定</td>
+</tr>
+<tr>
+<td>2</td>
+<td>31</td>
+<td>-</td>
+<td>ixt:numcommadot</td>
+<td>6</td>
+<td>-</td>
+<td>数字がカンマ区切りで表現されているため、formatに"ixt:numcommadot"を指定。また、この数字は百万単位で報告されているため、scaleに 6 を指定</td>
+</tr>
+<tr>
+<td>3</td>
+<td>36</td>
+<td>-</td>
+<td>ixt:numcommadot</td>
+<td>6</td>
+<td>-</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>4</td>
+<td>41</td>
+<td>44</td>
+<td>-</td>
+<td>-</td>
+<td>true</td>
+<td>このファクトはXHTMLタグを含むため、escapeに "true"を指定</td>
+</tr>
+</table>
+
+<h2>サンプルプログラムのソースコード</h2>
+<p>
+サンプルプログラムのソースコードは以下のようになります。
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width: 800px; margin-bottom: 30pt; padding: 10pt;">
+<pre>
+<span style="color: #007000">// 入力インスタンス文書のInstanceオブジェクト</span>
+Instance instance = ...;
+
+<span style="color: #007000">// 入力XHTML文書のDocumentオブジェクト</span>
+Document xhtmlDoc = ...;
+
+<span style="color: #007000">// ファクト#1のマッピングを作成</span>
+NonNumericItem fact1 = ...; <span style="color: #007000">// ファクト #1</span>
+Node dateNode = ...;        <span style="color: #007000">// XHTMLノード #16</span>
+NonNumericMapping mapping1 = new NonNumericMapping(
+	fact1,
+	dateNode,
+	FormatType.DATE_LONG_US,
+	false);
+
+<span style="color: #007000">// ファクト#2のマッピングを作成</span>
+NumericItem fact2 = ...; <span style="color: #007000">// ファクト #2</span>
+Node salesNode = ...;    <span style="color: #007000">// XHTMLノード #31</span>
+NonFractionMapping mapping2 = new NonFractionMapping(
+	fact2,
+	salesNode,
+	FormatType.NUM_COMMA_DOT,
+	6);
+
+<span style="color: #007000">// ファクト#3のマッピングを作成</span>
+NumericItem fact3 = ...;  <span style="color: #007000">// ファクト #3</span>
+Node incomeNode = ...;    <span style="color: #007000">// XHTMLノード #36</span>
+NonFractionMapping mapping3 = new NonFractionMapping(
+	fact3,
+	incomeNode,
+	FormatType.NUM_COMMA_DOT,
+	6);
+
+<span style="color: #007000">// ファクト#4のマッピングを作成</span>
+NonNumericItem ... = ... <span style="color: #007000">// ファクト #4</span>
+Node startNode = ...;    <span style="color: #007000">// XHTMLノード #41</span>
+Node endNode = ...;      <span style="color: #007000">// XHTMLノード #44</span>
+NonNumericMapping mapping4 = new NonNumericMapping(
+	fact4,
+	startNode,
+	endNode,
+	null,
+	true);
+
+<span style="color: #007000">// マッピングの配列を生成</span>
+InlineXBRLMapping[] mappings = new InlineXBRLMapping[]{
+	mapping1, mapping2, mapping3, mapping4
+};
+
+<span style="color: #007000">// Inline XBRL Generatorを生成</span>
+InlineXBRLGenerator generator = new InlineXBRLGenerator();
+
+<span style="color: #007000">// エラーハンドラを設定</span>
+generator.setErrorHandler(new MyErrorHandler());
+
+<span style="color: #007000">// Inline XBRLを生成</span>
+Document inlineDoc = generator.generateInlineXBRL(instance, xhtmlDoc, mappings);
+
+</pre>
+</div>
+
+<h2>結果Inline XBRL文書</h2>
+<p>
+結果のInline XBRL文書のソースコードは以下のようになります。
+</p>
+<div style="border: 1px solid black; background-color: #eeffff; font-size: 10.5pt; width: 800px; margin-bottom: 30pt;">
+<pre>
+&lt;html version="-//XBRL International//DTD XHTML Inline XBRL 1.0//EN"
+  xmlns="http://www.w3.org/1999/xhtml" xmlns:ix="http://www.xbrl.org/2008/inlineXBRL"
+  xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2010-04-20"
+  xmlns:link="http://www.xbrl.org/2003/linkbase"
+  xmlns:sample="http://www.fujitsu.com/xbrl/sample"
+  xmlns:xbrli="http://www.xbrl.org/2003/instance"
+  xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+  xmlns:xlink="http://www.w3.org/1999/xlink"&gt;
+  &lt;body&gt;
+    &lt;div&gt;&lt;b&gt;Report Sample (Dollars in millions)&lt;/b&gt;&lt;/div&gt;
+    &lt;div&gt;
+      &lt;table border="1px"&gt;
+        &lt;tr&gt;
+          &lt;th/&gt;
+          &lt;th&gt;2010&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Document Period End Date&lt;/td&gt;
+          &lt;td&gt;
+            &lt;ix:nonNumeric name="sample:DocumentPeriodEndDate" contextRef="CurrentDuration"
+                format="ixt:datelongus"&gt;May 31, 2010&lt;/ix:nonNumeric&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;Sales&lt;/td&gt;
+        &lt;td&gt;
+          &lt;ix:nonFraction name="sample:Sales" contextRef="CurrentDuration" unitRef="USD"
+               decimals="-6" format="ixt:numcommadot" scale="6"&gt;345,678&lt;/ix:nonFraction&gt;
+          &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;Net income (loss)&lt;/td&gt;
+          &lt;td&gt;(&lt;ix:nonFraction name="sample:NetIncomeLoss" contextRef="CurrentDuration" unitRef="USD" 
+               decimals="-6" sign="-" format="ixt:numcommadot" scale="6"&gt;12,345&lt;/ix:nonFraction&gt;)&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;b&gt;Income tax (text block):&lt;/b&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;ix:nonNumeric name="sample:IncomeTaxDisclosureTextBlock" contextRef="CurrentDuration"
+ escape="true"&gt;
+        This is a &lt;b&gt;note&lt;/b&gt; for income taxes.
+      &lt;/ix:nonNumeric&gt;
+    &lt;/div&gt;
+    &lt;div style="display: none"&gt;
+      &lt;ix:header&gt;
+        &lt;ix:hidden/&gt;
+        &lt;ix:references&gt;
+          &lt;link:schemaRef xlink:type="simple" xlink:href="sample.xsd"/&gt;
+        &lt;/ix:references&gt;
+        &lt;ix:resources&gt;
+          &lt;xbrli:context id="CurrentDuration"&gt;
+            &lt;xbrli:entity&gt;
+              &lt;xbrli:identifier scheme="sample"&gt;sample&lt;/xbrli:identifier&gt;
+            &lt;/xbrli:entity&gt;
+            &lt;xbrli:period&gt;
+              &lt;xbrli:startDate&gt;2009-06-01&lt;/xbrli:startDate&gt;
+              &lt;xbrli:endDate&gt;2010-05-31&lt;/xbrli:endDate&gt;
+            &lt;/xbrli:period&gt;
+          &lt;/xbrli:context&gt;
+          &lt;xbrli:unit id="USD"&gt;
+            &lt;xbrli:measure&gt;iso4217:USD&lt;/xbrli:measure&gt;
+          &lt;/xbrli:unit&gt;
+        &lt;/ix:resources&gt;
+      &lt;/ix:header&gt;
+    &lt;/div&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+</div>
+
+</div>
+
+</body>
+
+</html>
