@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xbrli:xbrl xmlns:sample="http://www.fujitsu.com/xbrl/sample"
+   xmlns:link="http://www.xbrl.org/2003/linkbase"
+   xmlns:xbrli="http://www.xbrl.org/2003/instance"
+   xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/1999/xhtml">
+  <link:schemaRef xlink:type="simple" xlink:href="sample.xsd"/>
+  <xbrli:context id="CurrentDuration">
+    <xbrli:entity>
+      <xbrli:identifier scheme="sample">sample</xbrli:identifier>
+    </xbrli:entity>
+    <xbrli:period>
+      <xbrli:startDate>2009-06-01</xbrli:startDate>
+      <xbrli:endDate>2010-05-31</xbrli:endDate>
+    </xbrli:period>
+  </xbrli:context>
+  <xbrli:unit id="USD">
+    <xbrli:measure>iso4217:USD</xbrli:measure>
+  </xbrli:unit>
+  <sample:DocumentPeriodEndDate contextRef="CurrentDuration" id="fact1">2010-05-31</sample:DocumentPeriodEndDate>
+  <sample:Sales decimals="-6" contextRef="CurrentDuration" unitRef="USD" id="fact2">345678000000</sample:Sales>
+  <sample:NetIncomeLoss decimals="-6" contextRef="CurrentDuration" 
+    unitRef="USD" id="fact3">-12345000000</sample:NetIncomeLoss>
+  <sample:IncomeTaxDisclosureTextBlock contextRef="CurrentDuration" 
+    id="fact4">a) This is the first &lt;b&gt;note&lt;/b&gt; for income taxes. &lt;p&gt;b) This is the second note for income taxes.&lt;/p&gt;</sample:IncomeTaxDisclosureTextBlock>
+  <sample:DummyMonetaryItem decimals="-6" contextRef="CurrentDuration" unitRef="USD" id="fact99999">99999000000</sample:DummyMonetaryItem>
+  <sample:DummyStringItem contextRef="CurrentDuration" id="factXXXXX">XXXXX</sample:DummyStringItem>
+  <link:footnoteLink xlink:type="extended" xlink:role="http://www.xbrl.org/2003/role/link">
+    <link:loc xlink:type="locator" xlink:href="#fact2" xlink:label="fact2"/>
+    <link:footnote xlink:type="resource" xlink:label="footnote5" 
+      xlink:role="http://www.xbrl.org/2003/role/footnote" xml:lang="en" id="footnote5">This is a very very long <i>footnote for sales.</i></link:footnote>
+    <link:footnoteArc xlink:type="arc" xlink:arcrole="http://www.xbrl.org/2003/arcrole/fact-footnote" 
+      xlink:from="fact2" xlink:to="footnote5" order="1.0"/>
+  </link:footnoteLink>
+</xbrli:xbrl>

@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ix="http://www.xbrl.org/2008/inlineXBRL" xmlns:link="http://www.xbrl.org/2003/linkbase" xmlns:sample="http://www.fujitsu.com/xbrl/sample" xmlns:iso4217="http://www.xbrl.org/2003/iso4217" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xbrli="http://www.xbrl.org/2003/instance" xmlns:p="http://www.xbrl.org/inlineXBRL/transformation/2010-04-20">
+  <head>
+    <title>Report Sample (Inline XBRL 1.0)</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  </head>
+  <body><div style="display: none"><ix:header><ix:references><link:schemaRef xlink:type="simple" xlink:href="sample.xsd"/></ix:references><ix:resources><xbrli:context id="CurrentDuration"><xbrli:entity><xbrli:identifier scheme="sample">sample</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2009-06-01</xbrli:startDate><xbrli:endDate>2010-05-31</xbrli:endDate></xbrli:period></xbrli:context><xbrli:unit id="USD"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit></ix:resources></ix:header></div>
+    <div><b>Report Sample (Dollars in millions)</b></div>
+    <div>
+      <table border="1">
+        <tr>
+          <th/>
+          <th>2010</th>
+        </tr>
+        <tr>
+          <td>Document Period End Date</td>
+          <td id="date"><ix:nonNumeric name="sample:DocumentPeriodEndDate" contextRef="CurrentDuration" id="fact1" escape="false" format="p:datelongus">May 31, 2010</ix:nonNumeric></td>
+        </tr>
+        <tr>
+          <td>Sales [1]</td>
+          <td id="sales"><ix:nonFraction name="sample:Sales" contextRef="CurrentDuration" unitRef="USD" decimals="-6" id="fact2" format="p:numcommadot" scale="6" footnoteRefs="footnote5">345,678</ix:nonFraction></td>
+        </tr>
+        <tr>
+          <td>Net income (loss)</td>
+          <td id="income">(<ix:nonFraction name="sample:NetIncomeLoss" contextRef="CurrentDuration" unitRef="USD" decimals="-6" id="fact3" sign="-" format="p:numcommadot" scale="6">12,345</ix:nonFraction>)</td>
+        </tr>
+      </table>
+      <div>
+        <b>Income tax (text block):</b>
+      </div>
+      <div id="textblock"><ix:nonNumeric name="sample:IncomeTaxDisclosureTextBlock" contextRef="CurrentDuration" id="fact4" escape="true">This is a <b>note</b> for income taxes.</ix:nonNumeric></div>
+      <p/>
+      <div>[1]</div>
+      <div id="footnote"><ix:footnote footnoteID="footnote5" arcrole="http://www.xbrl.org/2003/arcrole/fact-footnote" footnoteLinkRole="http://www.xbrl.org/2003/role/link" footnoteRole="http://www.xbrl.org/2003/role/footnote" xml:lang="en">This is a footnote for sales.</ix:footnote></div>
+    </div>
+  </body>
+</html>
