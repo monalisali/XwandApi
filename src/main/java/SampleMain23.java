@@ -17,7 +17,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
 import com.fujitsu.xml.xbrl.inlinexbrl.generator.ContinuationTagging;
 import com.fujitsu.xml.xbrl.inlinexbrl.generator.FootnoteMapping;
 import com.fujitsu.xml.xbrl.inlinexbrl.generator.FormatType;
@@ -49,6 +48,12 @@ import com.fujitsu.xml.xbrl.xwand.processor.XBRLProcessor;
 public class SampleMain23 {
 
 	public static void main(String[] args) throws Exception {
+
+		args = new String[] {
+				"C:\\Work\\WorkFile\\29.XBRL\\XwandApi\\data\\sample23\\sample_instance.xbrl",
+				"C:\\Work\\WorkFile\\29.XBRL\\XwandApi\\data\\sample23\\sample_xhtml.html",
+				"C:\\Work\\WorkFile\\29.XBRL\\XwandApi\\data\\sample23\\sample_ixbrl.html",
+		};
 
 		if (args.length < 3){
 			System.err.println("java SampleMain23 <XBRL File> <XHTML File> <IXBRL_1.1 File>");
@@ -113,7 +118,7 @@ public class SampleMain23 {
 
 		// create an array of mappings
 		InlineXBRLMapping[] mappings = new InlineXBRLMapping[] {
-			mapping1, mapping2, mapping3, mapping4, mapping5
+				mapping1, mapping2, mapping3, mapping4, mapping5
 		};
 
 		// create a inline XBRL generator

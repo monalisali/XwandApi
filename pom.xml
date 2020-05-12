@@ -23,6 +23,306 @@
             <scope>system</scope> <!--作用域-->
             <systemPath>${basedir}\src\lib\xwand.jar</systemPath> <!--项目根目录下的lib文件夹下-->
         </dependency>
+
+        <dependency>
+            <groupId>datamapping</groupId>
+            <artifactId>datamapping</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\datamapping.jar</systemPath> <!--项目根目录下的lib文件夹下-->
+        </dependency>
+
+        <dependency>
+            <groupId>formulaproc</groupId>
+            <artifactId>formulaproc</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\formulaproc.jar</systemPath> <!--项目根目录下的lib文件夹下-->
+        </dependency>
+
+        <dependency>
+            <groupId>frisproc</groupId>
+            <artifactId>frisproc</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\frisproc.jar</systemPath> <!--项目根目录下的lib文件夹下-->
+        </dependency>
+
+        <dependency>
+            <groupId>frtaproc</groupId>
+            <artifactId>frtaproc</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\frtaproc.jar</systemPath> <!--项目根目录下的lib文件夹下-->
+        </dependency>
+
+        <dependency>
+            <groupId>frtaproc</groupId>
+            <artifactId>frtaproc</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\frtaproc.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>gfmvalidator</groupId>
+            <artifactId>gfmvalidator</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\gfmvalidator.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>ixbrlproc</groupId>
+            <artifactId>ixbrlproc</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\ixbrlproc.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mapping-common</groupId>
+            <artifactId>mapping-common</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\mapping-common.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mappingengine</groupId>
+            <artifactId>mappingengine</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\mappingengine.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>mappingengineapi</groupId>
+            <artifactId>mappingengineapi</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\mappingengineapi.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>poi3_17_mod_all</groupId>
+            <artifactId>poi3_17_mod_all</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\poi3_17_mod_all.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>srcd-proc</groupId>
+            <artifactId>srcd-proc</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\srcd-proc.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>tablelink</groupId>
+            <artifactId>tablelink</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\tablelink.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>validation-edgar</groupId>
+            <artifactId>validation-edgar</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\validation-edgar.jar</systemPath>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>validation-esma</groupId>
+            <artifactId>validation-esma</artifactId>
+            <scope>system</scope> <!--作用域-->
+            <systemPath>${basedir}\src\lib\validation-esma.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>validation-framework</groupId>
+            <artifactId>validation-framework</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\validation-framework.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>validation-hmrc</groupId>
+            <artifactId>validation-hmrc</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\validation-hmrc.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>validation-hmrcei</groupId>
+            <artifactId>validation-hmrcei</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\validation-hmrcei.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>validation-hmrcjf</groupId>
+            <artifactId>validation-hmrcjf</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\validation-hmrcjf.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>validation-uk</groupId>
+            <artifactId>validation-uk</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\validation-uk.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>validation-ustbl</groupId>
+            <artifactId>validation-ustbl</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\validation-ustbl.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xbrldimensions</groupId>
+            <artifactId>xbrldimensions</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xbrldimensions.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xbrl-function</groupId>
+            <artifactId>xbrl-function</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xbrl-function.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xbrlproc</groupId>
+            <artifactId>xbrlproc</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xbrlproc.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xbrlquery</groupId>
+            <artifactId>xbrlquery</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xbrlquery.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xmlpath2</groupId>
+            <artifactId>xmlpath2</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmlpath2.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xmlpath2fn</groupId>
+            <artifactId>xmlpath2fn</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmlpath2fn.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xmlpath2fn</groupId>
+            <artifactId>xmlpath2fn</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmlpath2fn.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>xmlpro</groupId>
+            <artifactId>xmlpro</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmlpro.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xmlschema</groupId>
+            <artifactId>xmlschema</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmlschema.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xmlschemac</groupId>
+            <artifactId>xmlschemac</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmlschemac.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xmltrans</groupId>
+            <artifactId>xmltrans</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmltrans.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xmltransx</groupId>
+            <artifactId>xmltransx</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xmltransx.jar</systemPath>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>xwand_xpath2</groupId>
+            <artifactId>xwand_xpath2</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xwand_xpath2.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xwand-common</groupId>
+            <artifactId>xwand-common</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xwand-common.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xwandlink</groupId>
+            <artifactId>xwandlink</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xwandlink.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
+            <groupId>xwand-oim</groupId>
+            <artifactId>xwand-oim</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xwand-oim.jar</systemPath>
+        </dependency>
+
+
+
+        <dependency>
+            <groupId>xwandschema</groupId>
+            <artifactId>xwandschema</artifactId>
+            <scope>system</scope>
+            <systemPath>${basedir}\src\lib\xwandschema.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
 </project>
